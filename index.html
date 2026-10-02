@@ -1,31 +1,478 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mihir Deshpande's Website</title>
-    <link rel="stylesheet" href="./css/mdb.dark.min.css">
-    <script src="./myScript.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UPSC Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Literata:opsz,wght@7..72,500;7..72,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --surface: #ffffff;
+    --text: #172033;
+    --muted: #5d6779;
+    --line: #dde2e9;
+    --focus: #1d4ed8;
+    --mark: #fde68a;
+    --gs1: #b7791f;
+    --gs2: #2b6cb0;
+    --gs3: #2f855a;
+    --gs4: #9b2c6f;
+    --gen: #5d6779;
+    --serif: "Literata", Georgia, "Times New Roman", serif;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #11151c;
+      --surface: #1a202a;
+      --text: #e6e9ef;
+      --muted: #98a2b3;
+      --line: #2b3441;
+      --focus: #7aa2ff;
+      --mark: #5b4a12;
+      --gs1: #e0a847;
+      --gs2: #6aa8ee;
+      --gs3: #5cc08a;
+      --gs4: #d77bb0;
+      --gen: #98a2b3;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: 9rem; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.5;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  /* Top bar */
+  .top {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .top-inner { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 0 0.6rem;
+  }
+  .brand {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    margin: 0;
+  }
+  .search {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+  .search svg {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .search input {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.6rem 2.4rem 0.6rem 2.5rem;
+  }
+  .search input::placeholder { color: var(--muted); }
+  .search input::-webkit-search-cancel-button { display: none; }
+  .search .clear {
+    position: absolute;
+    right: 0.35rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    width: 2rem;
+    height: 2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 1;
+    display: none;
+  }
+  .search.has-text .clear { display: block; }
+  .hint {
+    position: absolute;
+    right: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 0 0.4rem;
+    pointer-events: none;
+  }
+  .search.has-text .hint, .search:focus-within .hint { display: none; }
+  @media (max-width: 640px) { .hint { display: none; } }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 -1rem;
+    padding: 0 1rem;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font: inherit;
+    font-size: 0.92rem;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    padding: 0.55rem 0.7rem 0.6rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab[aria-selected="true"] {
+    color: var(--text);
+    font-weight: 600;
+    border-bottom-color: var(--p, var(--text));
+  }
+  .tabs.dimmed .tab { opacity: 0.45; }
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--p, var(--gen));
+    flex: none;
+  }
+
+  /* Content */
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  .status {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0 0 1.25rem;
+    min-height: 1.4em;
+  }
+  section.subject { margin-bottom: 2.25rem; }
+  .subject-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    padding-left: 0.85rem;
+    border-left: 4px solid var(--p);
+    margin-bottom: 0.5rem;
+  }
+  .subject-head h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .paper { font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+  .progress { font-size: 0.85rem; color: var(--muted); margin-left: auto; }
+  ul.topics {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  ul.topics li + li { border-top: 1px solid var(--line); }
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 1rem;
+    text-decoration: none;
+  }
+  a.row:hover { background: color-mix(in srgb, var(--p) 8%, transparent); }
+  .row .name { min-width: 0; }
+  .row.soon { color: var(--muted); }
+  .tag {
+    flex: none;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  a.row .tag { color: var(--p); font-weight: 600; }
+  mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1px; }
+  .empty {
+    background: var(--surface);
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+  .empty p { margin: 0 0 0.75rem; }
+  .empty button {
+    font: inherit;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+  }
+  footer {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1rem 3rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>
 </head>
-
 <body>
-    <h3> Mihir Deshpande</h3>
-    <h4> Undergraduate Student, Dept of Electronics and Communication Engineering,</h4>
-    <h4> Vasavi College Of Engineering, Hyderabad.</h4>
 
-    <p></p>
-    <p></p>
-    <a href="./index.html">Home</a> |
-    <a href="./about.html">About</a> |
+<header class="top">
+  <div class="top-inner">
+    <div class="bar">
+      <h1 class="brand">UPSC Notes</h1>
+      <div class="search" id="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="q" type="search" placeholder="Search topics across all subjects" aria-label="Search topics" autocomplete="off">
+        <span class="hint" aria-hidden="true">/</span>
+        <button class="clear" id="clear" type="button" aria-label="Clear search">&times;</button>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Subjects"></nav>
+  </div>
+</header>
 
-    <a href="./Education.html">Education</a> |
-    <a href="./contact.html">Contact</a> |
-    <br>
-    <hr>
-    <img src="./images/profile_photo.jpg" alt="profile_photo" width="112.5" height="150">
-    <footer>Last Updated January 7th, 2022</footer>
+<main>
+  <p class="status" id="status" aria-live="polite"></p>
+  <div id="content"></div>
+</main>
+
+<footer>
+  To add a note: upload the HTML file to the folder shown in its path, then add that path to the READY list in this file.
+</footer>
+
+<script>
+/* ---------------------------------------------------------------
+   CONFIG: edit this block to manage your notes.
+
+   Each topic's page lives at  <subject id>/<topic-slug>.html
+   e.g. "Ancient India" under History  ->  history/ancient-india.html
+
+   When you upload a note, add its path to READY below.
+   Topics not in READY show as "soon" and are not clickable.
+---------------------------------------------------------------- */
+const READY = new Set([
+  // "history/ancient-india.html",
+]);
+
+const SUBJECTS = [
+  { id: "history", name: "History", paper: "GS I", group: "gs1", topics: [
+    "Ancient India", "Medieval India", "Modern India (1757 to 1947)", "Indian National Movement",
+    "Post-Independence Consolidation", "World History"
+  ]},
+  { id: "art-culture", name: "Art & Culture", paper: "GS I", group: "gs1", topics: [
+    "Architecture", "Sculpture & Pottery", "Painting", "Classical Dance & Music",
+    "Literature & Languages", "Religion & Philosophy", "Festivals, Fairs & Cultural Institutions"
+  ]},
+  { id: "geography", name: "Geography", paper: "GS I", group: "gs1", topics: [
+    "Geomorphology", "Climatology", "Oceanography", "Indian Physical Geography",
+    "Rivers & Drainage", "Agriculture & Resources", "Industries & Location Factors", "Human & Settlement Geography"
+  ]},
+  { id: "society", name: "Indian Society", paper: "GS I", group: "gs1", topics: [
+    "Diversity of India", "Women & Women's Organisations", "Population & Associated Issues",
+    "Poverty & Development", "Urbanisation", "Globalisation & Society", "Communalism, Regionalism & Secularism"
+  ]},
+  { id: "polity", name: "Polity & Constitution", paper: "GS II", group: "gs2", topics: [
+    "Constitutional Development", "Preamble & Features", "Fundamental Rights, DPSP & Duties",
+    "Union Executive", "Parliament", "State Government & Legislature", "Judiciary",
+    "Federalism & Centre-State Relations", "Constitutional & Statutory Bodies", "Elections & Representation"
+  ]},
+  { id: "governance", name: "Governance", paper: "GS II", group: "gs2", topics: [
+    "Government Policies & Interventions", "Transparency & Accountability", "E-Governance",
+    "Citizen Charters", "Role of Civil Services", "Local Self-Government", "Pressure Groups & NGOs"
+  ]},
+  { id: "social-justice", name: "Social Justice", paper: "GS II", group: "gs2", topics: [
+    "Welfare Schemes", "Vulnerable Sections", "Health", "Education", "Human Resources", "Poverty & Hunger"
+  ]},
+  { id: "international-relations", name: "International Relations", paper: "GS II", group: "gs2", topics: [
+    "India & Its Neighbourhood", "Bilateral & Regional Groupings", "Global Institutions",
+    "Indian Diaspora", "Effect of Policies of Other Countries on India"
+  ]},
+  { id: "economy", name: "Economy", paper: "GS III", group: "gs3", topics: [
+    "National Income & Growth", "Money, Banking & Inflation", "Fiscal Policy & Budgeting",
+    "External Sector & Trade", "Agriculture & Food Security", "Industry & Infrastructure",
+    "Investment Models & Inclusive Growth", "Land Reforms"
+  ]},
+  { id: "environment", name: "Environment & Ecology", paper: "GS III", group: "gs3", topics: [
+    "Ecology Basics", "Biodiversity & Conservation", "Climate Change", "Pollution",
+    "Environmental Impact Assessment", "International Conventions", "Protected Areas"
+  ]},
+  { id: "science-tech", name: "Science & Technology", paper: "GS III", group: "gs3", topics: [
+    "Space Technology", "Defence Technology", "Biotechnology", "IT, AI & Cyber",
+    "Nuclear Technology", "Energy", "IPR & Awareness in Science"
+  ]},
+  { id: "security", name: "Internal Security & Disasters", paper: "GS III", group: "gs3", topics: [
+    "Challenges to Internal Security", "Left Wing Extremism", "Border Management",
+    "Cyber Security", "Money Laundering", "Security Forces & Agencies", "Disaster Management"
+  ]},
+  { id: "ethics", name: "Ethics, Integrity & Aptitude", paper: "GS IV", group: "gs4", topics: [
+    "Ethics & Human Interface", "Attitude", "Aptitude & Emotional Intelligence",
+    "Thinkers & Philosophers", "Public/Civil Service Values", "Probity in Governance", "Case Studies"
+  ]},
+  { id: "current-affairs", name: "Current Affairs", paper: "Prelims & Mains", group: "gen", topics: [
+    "Monthly Compilations", "Government Schemes", "Reports & Indices", "Important Summits",
+    "Bills & Acts", "Judgments"
+  ]},
+  { id: "csat", name: "CSAT", paper: "Prelims Paper II", group: "gen", topics: [
+    "Comprehension", "Logical Reasoning", "Basic Numeracy", "Data Interpretation", "Decision Making"
+  ]},
+  { id: "essay", name: "Essay", paper: "Mains", group: "gen", topics: [
+    "Structure & Approach", "Quotes & Examples Bank", "Philosophical Themes", "Social & Economic Themes",
+    "Practice Essays"
+  ]}
+];
+
+/* ---------------- Code below does not need editing ---------------- */
+
+const slug = s => s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+const esc = s => s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+SUBJECTS.forEach(s => {
+  s.items = s.topics.map(t => ({ title: t, path: `${s.id}/${slug(t)}.html`, subject: s }));
+});
+
+const $ = id => document.getElementById(id);
+const qEl = $("q"), searchEl = $("search"), tabsEl = $("tabs"), contentEl = $("content"), statusEl = $("status");
+
+let active = "all";
+
+function hl(text, terms) {
+  if (!terms.length) return esc(text);
+  const re = new RegExp("(" + terms.map(reEsc).join("|") + ")", "ig");
+  return text.split(re).map((part, i) => i % 2 ? "<mark>" + esc(part) + "</mark>" : esc(part)).join("");
+}
+
+function renderTabs() {
+  const all = `<button class="tab" role="tab" data-id="all" aria-selected="${active === "all"}" style="--p: var(--text)">All subjects</button>`;
+  const rest = SUBJECTS.map(s =>
+    `<button class="tab" role="tab" data-id="${s.id}" aria-selected="${active === s.id}" style="--p: var(--${s.group})"><span class="dot"></span>${esc(s.name)}</button>`
+  ).join("");
+  tabsEl.innerHTML = all + rest;
+}
+
+function sectionHtml(s, items, terms) {
+  const readyCount = s.items.filter(i => READY.has(i.path)).length;
+  const rows = items.map(i => {
+    const name = `<span class="name">${hl(i.title, terms)}</span>`;
+    return READY.has(i.path)
+      ? `<li><a class="row" href="${i.path}">${name}<span class="tag">Open</span></a></li>`
+      : `<li><div class="row soon">${name}<span class="tag">Soon</span></div></li>`;
+  }).join("");
+  return `
+    <section class="subject" style="--p: var(--${s.group})">
+      <div class="subject-head">
+        <h2>${hl(s.name, terms)}</h2>
+        <span class="paper">${esc(s.paper)}</span>
+        <span class="progress">${readyCount} of ${s.items.length} ready</span>
+      </div>
+      <ul class="topics">${rows}</ul>
+    </section>`;
+}
+
+function render() {
+  const raw = qEl.value.trim();
+  const terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
+  searchEl.classList.toggle("has-text", raw.length > 0);
+  tabsEl.classList.toggle("dimmed", raw.length > 0);
+
+  let html = "";
+  if (terms.length) {
+    let total = 0;
+    SUBJECTS.forEach(s => {
+      const subjMatch = terms.every(t => s.name.toLowerCase().includes(t));
+      const items = s.items.filter(i => subjMatch || terms.every(t => i.title.toLowerCase().includes(t) || s.name.toLowerCase().includes(t)));
+      if (items.length) { total += items.length; html += sectionHtml(s, items, terms); }
+    });
+    statusEl.textContent = total ? `${total} topic${total === 1 ? "" : "s"} found for "${raw}"` : "";
+    if (!total) {
+      html = `<div class="empty"><p>No topics match "${esc(raw)}". Try a shorter word or a different spelling.</p><button type="button" id="empty-clear">Clear search</button></div>`;
+    }
+  } else {
+    const list = active === "all" ? SUBJECTS : SUBJECTS.filter(s => s.id === active);
+    const total = list.reduce((n, s) => n + s.items.length, 0);
+    const ready = list.reduce((n, s) => n + s.items.filter(i => READY.has(i.path)).length, 0);
+    statusEl.textContent = `${total} topics, ${ready} with notes`;
+    html = list.map(s => sectionHtml(s, s.items, [])).join("");
+  }
+  contentEl.innerHTML = html;
+  const ec = $("empty-clear");
+  if (ec) ec.addEventListener("click", clearSearch);
+}
+
+function setActive(id) {
+  active = id;
+  history.replaceState(null, "", id === "all" ? location.pathname : "#" + id);
+  renderTabs();
+  render();
+  const sel = tabsEl.querySelector('[aria-selected="true"]');
+  if (sel) sel.scrollIntoView({ inline: "center", block: "nearest" });
+}
+
+function clearSearch() {
+  qEl.value = "";
+  render();
+  qEl.focus();
+}
+
+tabsEl.addEventListener("click", e => {
+  const b = e.target.closest(".tab");
+  if (!b) return;
+  qEl.value = "";
+  setActive(b.dataset.id);
+});
+qEl.addEventListener("input", render);
+$("clear").addEventListener("click", clearSearch);
+
+document.addEventListener("keydown", e => {
+  const typing = /^(input|textarea|select)$/i.test(document.activeElement.tagName);
+  if (e.key === "/" && !typing) { e.preventDefault(); qEl.focus(); }
+  if (e.key === "Escape" && document.activeElement === qEl) { qEl.value = ""; render(); qEl.blur(); }
+});
+
+const fromHash = location.hash.slice(1);
+if (SUBJECTS.some(s => s.id === fromHash)) active = fromHash;
+renderTabs();
+render();
+</script>
 </body>
-
 </html>
