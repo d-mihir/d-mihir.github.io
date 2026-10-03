@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Income Accounting — Oct 2, 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1f3a5f 0%, #2d5a8c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 5px;
+        }
+        
+        header .date {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: #f0f0f0;
+            padding: 0;
+            border-bottom: 2px solid #1f3a5f;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        nav button {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 15px;
+            border: none;
+            background: #f0f0f0;
+            color: #333;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        nav button:hover {
+            background: #e0e0e0;
+        }
+        
+        nav button.active {
+            background: #1f3a5f;
+            color: white;
+            border-bottom-color: #ff6b6b;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        h2 {
+            color: #1f3a5f;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #2d5a8c;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+        
+        .formula {
+            background: #f8f9fa;
+            border-left: 4px solid #1f3a5f;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            margin: 15px 0;
+            border-collapse: collapse;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        th {
+            background: #1f3a5f;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        tr:hover {
+            background: #e8f0fa;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 12px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .key-point {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        footer {
+            background: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>National Income Accounting</h1>
+            <div class="date">Study Notes — October 2, 2026</div>
+        </header>
+        
+        <nav>
+            <button class="tab-btn active" onclick="showSection('overview')">Overview</button>
+            <button class="tab-btn" onclick="showSection('aggregates')">Aggregates</button>
+            <button class="tab-btn" onclick="showSection('methods')">Three Methods</button>
+            <button class="tab-btn" onclick="showSection('formulas')">Formulas</button>
+            <button class="tab-btn" onclick="showSection('circular-flow')">Circular Flow</button>
+            <button class="tab-btn" onclick="showSection('gdp-variants')">GDP Variants</button>
+            <button class="tab-btn" onclick="showSection('personal-income')">Personal Income</button>
+            <button class="tab-btn" onclick="showSection('welfare')">Welfare vs GDP</button>
+        </nav>
+        
+        <div class="content">
+            <!-- OVERVIEW -->
+            <div id="overview" class="section active">
+                <h2>Overview: What is National Income Accounting?</h2>
+                <p>National income accounting is a systematic method of measuring the total monetary value of goods and services produced by an economy during a specific period (usually one year). It helps policymakers, economists, and investors understand the size, growth, and health of an economy.</p>
+                
+                <h3>The Core Principle</h3>
+                <p>National income only counts what corresponds to <span class="highlight">current production of goods and services</span>. Everything else — however much money changes hands — is excluded:</p>
+                <ul>
+                    <li><strong>Included:</strong> Wages for work done, farm crops (even self-consumed), broker commissions, imputed rent</li>
+                    <li><strong>Excluded:</strong> Pensions, scholarships, lottery winnings, second-hand goods, financial asset sales</li>
+                </ul>
+                
+                <h3>Why These Distinctions Matter</h3>
+                <p>Counting only current production prevents double-counting (e.g., flour counted twice — once when sold to a baker, once when baked bread is sold). It also ensures the figure reflects real economic activity, not just transfers of existing assets.</p>
+                
+                <h3>The Three Measurement Methods</h3>
+                <p>All three approaches measure the same thing from different angles:</p>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Approach</th>
+                        <th>Measures</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Product Method</strong></td>
+                        <td>Production side</td>
+                        <td>Value added by each sector</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Income Method</strong></td>
+                        <td>Distribution side</td>
+                        <td>Factor incomes earned (wages, rent, interest, profit)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Expenditure Method</strong></td>
+                        <td>Disposition side</td>
+                        <td>Spending on final goods: C + I + G + (X−M)</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- AGGREGATES -->
+            <div id="aggregates" class="section">
+                <h2>National Income Aggregates</h2>
+                
+                <h3>The Hierarchy</h3>
+                <p>These four aggregates build on each other:</p>
+                
+                <h3>1. GDP (Gross Domestic Product)</h3>
+                <p><strong>Definition:</strong> Total market value of all final goods and services produced <span class="highlight">within a country's borders</span> during a year, gross of depreciation.</p>
+                <p><strong>Key feature:</strong> Domestic = within the country (includes foreign firms operating locally); Gross = depreciation not subtracted.</p>
+                
+                <h3>2. GNP (Gross National Product)</h3>
+                <p><strong>Definition:</strong> Total market value of all final goods and services produced by a country's <span class="highlight">residents</span>, wherever located.</p>
+                <div class="formula">GNP = GDP + NFIA<br>(NFIA = Net Factor Income from Abroad)</div>
+                <p>NFIA captures income earned by residents abroad minus income earned by foreigners domestically.</p>
+                
+                <h3>3. NDP (Net Domestic Product)</h3>
+                <p><strong>Definition:</strong> GDP after deducting depreciation (consumption of fixed capital).</p>
+                <div class="formula">NDP = GDP − Depreciation</div>
+                <p>Shows the value of new output available after replacing worn-out capital.</p>
+                
+                <h3>4. NNP (Net National Product)</h3>
+                <p><strong>Definition:</strong> GNP after deducting depreciation; equals National Income at market prices.</p>
+                <div class="formula">NNP = GNP − Depreciation<br>OR<br>NNP = NDP + NFIA</div>
+                
+                <h3>NNP at Factor Cost (National Income)</h3>
+                <p><strong>Definition:</strong> NNP valued at what factors of production actually earn, excluding the effect of indirect taxes and subsidies.</p>
+                <div class="formula">NNP at FC = NNP at Market Prices − Net Indirect Taxes<br>where Net Indirect Taxes = Indirect Taxes − Subsidies</div>
+                
+                <div class="key-point">
+                    <strong>Why the distinction?</strong> Market prices include GST and excise duties that don't represent anyone's earned income — they go to the government. Factor cost strips these out, showing what factors of production actually earned.
+                </div>
+                
+                <h3>Quick Comparison Table</h3>
+                <table>
+                    <tr>
+                        <th>Aggregate</th>
+                        <th>Geographic Basis</th>
+                        <th>Depreciation Subtracted?</th>
+                        <th>Formula</th>
+                    </tr>
+                    <tr>
+                        <td>GDP</td>
+                        <td>Domestic (territory)</td>
+                        <td>No</td>
+                        <td>Sum of value added</td>
+                    </tr>
+                    <tr>
+                        <td>GNP</td>
+                        <td>National (residents)</td>
+                        <td>No</td>
+                        <td>GDP + NFIA</td>
+                    </tr>
+                    <tr>
+                        <td>NDP</td>
+                        <td>Domestic (territory)</td>
+                        <td>Yes</td>
+                        <td>GDP − Depreciation</td>
+                    </tr>
+                    <tr>
+                        <td>NNP</td>
+                        <td>National (residents)</td>
+                        <td>Yes</td>
+                        <td>GNP − Depreciation</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- THREE METHODS -->
+            <div id="methods" class="section">
+                <h2>The Three Methods of Measuring National Income</h2>
+                
+                <h3>1. Product (Value Added) Method</h3>
+                <p><strong>Approach:</strong> Sum the value added at each stage of production across all sectors, avoiding double-counting.</p>
+                <p><strong>Formula:</strong> Value Added = Output Value − Intermediate Consumption (inputs bought from other producers)</p>
+                
+                <p><strong>Key Precautions:</strong></p>
+                <ul>
+                    <li>Avoid double-counting — include only final goods or value added, never intermediate goods</li>
+                    <li>Exclude second-hand goods (already counted when originally made); include broker's commission</li>
+                    <li>Include self-consumed output and unsold stock, valued at market price</li>
+                    <li>Include imputed rent of owner-occupied houses</li>
+                    <li>Exclude purely financial transactions and transfer payments</li>
+                </ul>
+                
+                <h3>2. Income Method</h3>
+                <p><strong>Approach:</strong> Sum all factor incomes earned in the production process: wages, rent, interest, and profit.</p>
+                <div class="formula">National Income = Compensation of Employees + Operating Surplus + Mixed Income of Self-Employed</div>
+                
+                <p><strong>Key Precautions:</strong></p>
+                <ul>
+                    <li>Exclude transfer payments (pensions, scholarships) — no current production in exchange</li>
+                    <li>Exclude windfall gains (lottery winnings) — not earned through production</li>
+                    <li>Include profit gross of tax and undistributed profit — tax is a transfer, not a reduction in earnings</li>
+                    <li>Include imputed rent of owner-occupied houses and self-consumed output</li>
+                    <li>Exclude interest on purely personal consumption loans (treated as a transfer)</li>
+                    <li>Include income from own-account production (farmer's own produce)</li>
+                </ul>
+                
+                <h3>3. Expenditure Method</h3>
+                <p><strong>Approach:</strong> Sum all spending on final goods and services.</p>
+                <div class="formula">GDP = C + I + G + (X − M)</div>
+                <p><strong>Where:</strong></p>
+                <ul>
+                    <li>C = Private Final Consumption Expenditure</li>
+                    <li>I = Gross Domestic Capital Formation (Investment), including change in stock</li>
+                    <li>G = Government Final Consumption Expenditure</li>
+                    <li>(X − M) = Net Exports (Exports − Imports)</li>
+                </ul>
+                
+                <p><strong>Key Precautions:</strong></p>
+                <ul>
+                    <li>Include only expenditure on final goods; exclude intermediate goods</li>
+                    <li>Include imputed expenditure (self-consumed output, imputed rent)</li>
+                    <li>Exclude second-hand goods; include only brokerage/commission on such sales</li>
+                    <li>Exclude expenditure on financial assets (shares, bonds) — transfers of ownership, not production</li>
+                    <li>Include change in stock (inventory investment), positive or negative</li>
+                    <li>Exclude transfer payments from government expenditure (pensions, subsidies)</li>
+                </ul>
+            </div>
+            
+            <!-- FORMULAS -->
+            <div id="formulas" class="section">
+                <h2>Key Formulas for National Income Calculation</h2>
+                
+                <h3>The Aggregates Chain</h3>
+                <div class="formula">GDP → (+NFIA) → GNP → (−Depreciation) → NNP at MP → (−Net Indirect Taxes) → NNP at FC (National Income)</div>
+                
+                <h3>Detailed Formulas</h3>
+                <table>
+                    <tr>
+                        <th>Aggregate</th>
+                        <th>Formula</th>
+                    </tr>
+                    <tr>
+                        <td><strong>GNP</strong></td>
+                        <td>GNP = GDP + NFIA</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NDP</strong></td>
+                        <td>NDP = GDP − Depreciation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NNP at MP</strong></td>
+                        <td>NNP = GNP − Depreciation (or NDP + NFIA)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NNP at FC</strong></td>
+                        <td>NNP at FC = NNP at MP − (Indirect Taxes − Subsidies)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>National Income</strong></td>
+                        <td>= NNP at FC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Product Method</strong></td>
+                        <td>GDP = Σ (Output − Intermediate Consumption) across all sectors</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Expenditure Method</strong></td>
+                        <td>GDP = C + I + G + (X − M)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GDP Deflator</strong></td>
+                        <td>GDP Deflator = (Nominal GDP ÷ Real GDP) × 100</td>
+                    </tr>
+                </table>
+                
+                <h3>Indirect Tax & Subsidy Adjustment</h3>
+                <p>When moving from market price to factor cost, we adjust for taxes and subsidies because they affect what buyers pay and producers receive, but don't represent income earned by factors of production.</p>
+                <div class="formula">Factor Cost = Market Price − Indirect Taxes + Subsidies</div>
+                
+                <p><strong>Example:</strong> If market price is ₹100, GST is ₹10, and subsidy is ₹5:</p>
+                <div class="formula">Factor Cost = 100 − 10 + 5 = ₹95</div>
+                <p>The ₹95 represents what factors of production actually earned; the ₹10 tax goes to government, and ₹5 comes from government support.</p>
+            </div>
+            
+            <!-- CIRCULAR FLOW -->
+            <div id="circular-flow" class="section">
+                <h2>Circular Flow of Income in a Simple Economy</h2>
+                
+                <h3>The Core Concept</h3>
+                <p>The circular flow shows how money and goods move continuously through the economy in a circle:</p>
+                <ul>
+                    <li>Households own factors of production (land, labour, capital)</li>
+                    <li>Firms hire factors and produce goods/services</li>
+                    <li>Households receive income (wages, rent, interest, profit) from selling their factors</li>
+                    <li>Households spend income on goods/services from firms</li>
+                    <li>The cycle repeats</li>
+                </ul>
+                
+                <h3>Why All Three Methods Produce the Same Result</h3>
+                <p>Consider a simple baker-and-flour economy with only two producers:</p>
+                
+                <h4>The Setup:</h4>
+                <ul>
+                    <li>Miller produces flour worth ₹40, sells to baker</li>
+                    <li>Baker buys flour for ₹40, produces bread worth ₹100, sells to consumers</li>
+                </ul>
+                
+                <h4>Product Method:</h4>
+                <div class="formula">Miller's value added: 40 (no intermediate cost)<br>Baker's value added: 100 − 40 = 60<br>GDP = 40 + 60 = ₹100</div>
+                
+                <h4>Income Method:</h4>
+                <div class="formula">Miller's income: ₹40<br>Baker's income: ₹60<br>National Income = 40 + 60 = ₹100</div>
+                
+                <h4>Expenditure Method:</h4>
+                <div class="formula">Consumer spending on bread (final good) = ₹100<br>Flour is intermediate (bought by baker, not consumers)<br>GDP = ₹100</div>
+                
+                <h3>Why They Match</h3>
+                <p>The same ₹100 that consumers spend (Expenditure) is simultaneously received as income by Miller and Baker (Income) and represents exactly the value added at each production stage (Product). This is the circular flow: spending becomes income, income gets spent, spending finances production.</p>
+            </div>
+            
+            <!-- GDP VARIANTS -->
+            <div id="gdp-variants" class="section">
+                <h2>GDP Variants: Real, Nominal, Deflator</h2>
+                
+                <h3>Nominal GDP</h3>
+                <p><strong>Definition:</strong> GDP valued at <span class="highlight">current year prices</span>.</p>
+                <p><strong>What it reflects:</strong> Both changes in physical output and changes in prices (inflation).</p>
+                <p><strong>Formula:</strong> Σ (current year quantity × current year price)</p>
+                
+                <h3>Real GDP</h3>
+                <p><strong>Definition:</strong> GDP valued at <span class="highlight">constant (base year) prices</span>.</p>
+                <p><strong>What it reflects:</strong> Only changes in physical output; inflation is removed.</p>
+                <p><strong>Formula:</strong> Nominal GDP ÷ GDP Deflator × 100</p>
+                
+                <h3>Why Both Matter</h3>
+                <p>If only bread is produced:</p>
+                <table>
+                    <tr>
+                        <th>Year</th>
+                        <th>Quantity</th>
+                        <th>Price/unit</th>
+                        <th>Nominal GDP</th>
+                        <th>Real GDP (base 2020 = ₹10)</th>
+                    </tr>
+                    <tr>
+                        <td>2020 (base)</td>
+                        <td>100</td>
+                        <td>₹10</td>
+                        <td>₹1,000</td>
+                        <td>₹1,000</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>100</td>
+                        <td>₹15</td>
+                        <td>₹1,500</td>
+                        <td>₹1,000</td>
+                    </tr>
+                </table>
+                <p><strong>Insight:</strong> Output didn't change (still 100 loaves), but Nominal GDP rose 50% purely due to inflation. Real GDP correctly shows no real growth.</p>
+                
+                <h3>GDP Deflator</h3>
+                <p><strong>Definition:</strong> A price index that measures the overall change in prices across the entire economy.</p>
+                <div class="formula">GDP Deflator = (Nominal GDP ÷ Real GDP) × 100</div>
+                <p><strong>Example:</strong> If Nominal GDP = ₹1,500 and Real GDP = ₹1,000:</p>
+                <div class="formula">GDP Deflator = (1,500 ÷ 1,000) × 100 = 150</div>
+                <p>This means prices have risen 50% from the base year (index of 100).</p>
+                
+                <h3>Wholesale Price Index (WPI)</h3>
+                <p><strong>Definition:</strong> A price index measuring inflation at the wholesale level (before retail markup).</p>
+                <p><strong>Difference from GDP Deflator:</strong></p>
+                <ul>
+                    <li>WPI: focuses on goods only, measured at wholesale stage</li>
+                    <li>GDP Deflator: covers all final goods and services (including services), measured at retail/final consumer level</li>
+                    <li>WPI tends to lead GDP Deflator (wholesale price changes precede retail changes)</li>
+                </ul>
+            </div>
+            
+            <!-- PERSONAL INCOME -->
+            <div id="personal-income" class="section">
+                <h2>Personal Income and Personal Disposable Income</h2>
+                
+                <h3>Personal Income</h3>
+                <p><strong>Definition:</strong> Income actually <span class="highlight">received</span> by individuals and households, whether earned currently or not.</p>
+                <p><strong>Formula:</strong></p>
+                <div class="formula">Personal Income = National Income − (Corporate Taxes + Undistributed Profits + Social Security Contributions) + Transfer Payments</div>
+                
+                <p><strong>Why the adjustments?</strong></p>
+                <ul>
+                    <li><strong>Subtract corporate taxes:</strong> Part of national income goes to government, not households</li>
+                    <li><strong>Subtract undistributed profits:</strong> Firms retain part of earnings, not distribute to shareholders</li>
+                    <li><strong>Subtract social security contributions:</strong> Workers pay into social security, reducing take-home income</li>
+                    <li><strong>Add transfer payments:</strong> Households receive pensions, scholarships, unemployment benefits even though they don't contribute current production</li>
+                </ul>
+                
+                <h3>Personal Disposable Income (PDI)</h3>
+                <p><strong>Definition:</strong> Income actually <span class="highlight">available to households</span> after paying all taxes and receiving transfer payments.</p>
+                <div class="formula">PDI = Personal Income − Personal Income Tax</div>
+                
+                <p><strong>What households do with it:</strong> Spend it on consumption (C) or save it (S)</p>
+                <div class="formula">PDI = C + S</div>
+                
+                <h3>Quick Hierarchy</h3>
+                <p>From broadest to narrowest:</p>
+                <div class="formula">GDP<br>↓<br>NNP at FC (National Income)<br>↓<br>Personal Income<br>↓<br>Personal Disposable Income</div>
+                
+                <h3>Example Calculation</h3>
+                <table>
+                    <tr>
+                        <td>National Income</td>
+                        <td>₹100 crore</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Corporate profit tax</td>
+                        <td>(₹10)</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Undistributed profit</td>
+                        <td>(₹5)</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Social security contribution</td>
+                        <td>(₹3)</td>
+                    </tr>
+                    <tr>
+                        <td>Plus: Transfer payments (pensions, scholarships)</td>
+                        <td>₹8</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Personal Income</strong></td>
+                        <td><strong>₹90 crore</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Less: Personal income tax</td>
+                        <td>(₹15)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Personal Disposable Income</strong></td>
+                        <td><strong>₹75 crore</strong></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- WELFARE VS GDP -->
+            <div id="welfare" class="section">
+                <h2>GDP vs. Welfare: Why GDP is Not Everything</h2>
+                
+                <h3>The Problem with Using GDP as a Welfare Measure</h3>
+                <p><span class="highlight">GDP measures economic output, not happiness or well-being.</span> A rising GDP doesn't necessarily mean people are better off.</p>
+                
+                <h3>What GDP Counts (and Misses)</h3>
+                <p><strong>GDP includes:</strong></p>
+                <ul>
+                    <li>All economic transactions, whether they improve welfare or not</li>
+                    <li>Spending on medical treatment (counts as output, but reflects illness)</li>
+                    <li>Pollution cleanup costs (counts as output, but reflects environmental damage)</li>
+                    <li>Prison construction and operation (counts as output, but reflects crime/social problems)</li>
+                </ul>
+                
+                <p><strong>GDP misses or excludes:</strong></p>
+                <ul>
+                    <li><strong>Non-market activities:</strong> Housework, parenting, volunteering, community work (huge contributions to welfare, not counted)</li>
+                    <li><strong>Leisure time:</strong> A society with more free time and less work may be better off, but this reduces GDP</li>
+                    <li><strong>Environmental degradation:</strong> Logging forests, mining minerals add to GDP immediately, but destroy future welfare</li>
+                    <li><strong>Income inequality:</strong> Two countries with the same GDP may have vastly different welfare if one has equal income and the other has extreme inequality</li>
+                    <li><strong>Health and education quality:</strong> Spending on education (counts in GDP) doesn't measure whether actual learning improved</li>
+                    <li><strong>Social capital and relationships:</strong> Strong families and communities contribute to welfare but aren't market transactions</li>
+                    <li><strong>Safety and security:</strong> A safer society with less crime may have lower GDP (less spending on security) but better welfare</li>
+                </ul>
+                
+                <h3>The Paradox</h3>
+                <div class="key-point">
+                    <strong>Higher GDP doesn't always mean higher welfare.</strong> A hurricane causes property damage (counted as negative income in some accounts), but rebuilding costs (counted as positive GDP). Net GDP may be near zero, but welfare clearly declined.
+                </div>
+                
+                <h3>Alternate Welfare Measures</h3>
+                <p>Economists have proposed alternatives to GDP:</p>
+                <table>
+                    <tr>
+                        <th>Measure</th>
+                        <th>What it adds/changes</th>
+                    </tr>
+                    <tr>
+                        <td><strong>GNI (Gross National Income)</strong></td>
+                        <td>Replaces GDP with focus on income earned by residents (accounts for NFIA)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HDI (Human Development Index)</strong></td>
+                        <td>Combines GDP per capita with life expectancy and education levels</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Green GDP</strong></td>
+                        <td>Subtracts environmental damage costs from GDP</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Genuine Progress Indicator (GPI)</strong></td>
+                        <td>Adjusts GDP for leisure, inequality, environmental damage, non-market activities</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bhutan's GNH (Gross National Happiness)</strong></td>
+                        <td>Directly measures happiness and well-being instead of economic output</td>
+                    </tr>
+                </table>
+                
+                <h3>Key Takeaway</h3>
+                <p>GDP is a <strong>useful but incomplete measure</strong>. It tells you about economic activity, but to understand whether a society is truly better off, you need to look at:</p>
+                <ul>
+                    <li>Distribution of income (inequality)</li>
+                    <li>Health and life expectancy</li>
+                    <li>Education quality and access</li>
+                    <li>Environmental sustainability</li>
+                    <li>Work-life balance and leisure</li>
+                    <li>Social cohesion and safety</li>
+                </ul>
+                
+                <div class="warning">
+                    <strong>Remember:</strong> A country can have growing GDP while welfare stagnates or declines if the growth is concentrated among the rich, or comes at the cost of environmental destruction, inequality, or reduced leisure.
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>National Income Accounting Study Notes</strong> | Generated: October 2, 2026</p>
+            <p>Topics covered: GDP, GNP, NDP, NNP, Factor Cost, Product/Income/Expenditure Methods, Real vs Nominal GDP, Personal Income, Welfare vs GDP</p>
+        </footer>
+    </div>
+    
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update button states
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
